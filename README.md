@@ -1,7 +1,7 @@
 # Octopus-Max-EZ-IDEX-2 in 1 Out
  Octopus-Max-EZ-IDEX-2 in 1 Out
 
- I am new to Klipper, Please help me o configure for 2 in 1 out hottends in IDEX Mode
+ I am new to Klipper, Please help me to configure for 2 in 1 out hotends in IDEX Mode
 
  Board Respository : https://github.com/bigtreetech/Octopus-Max-EZ
  
@@ -9,7 +9,6 @@
 
  Reference for 4 extruders in IDEX : https://github.com/DrumClock/my_config
 
- Hi, i want to configure Klipper for IDEX mode wih 2 in 1 out Hotend
 
  My drivers are X1 = EZ5160,
                 X2 = EZ5160,
@@ -33,7 +32,7 @@
 				 
                  Z-Minimum = CR Ttouch
 
-I am using all axis as Lead Screws, no Blet drive
+I am using all axis as Lead Screws, no belt drive
 One Rotaion travel distance = 12 mm (all axis), steps per unitt in Marlin = 533.33 (for 32 microsteps)
 All my extruders are Dual gear Exruders Steps per unit in Marlin = 322.12 (for 32 microsteps)
 
