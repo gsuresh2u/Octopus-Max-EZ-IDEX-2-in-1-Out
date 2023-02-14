@@ -11,23 +11,26 @@
 
  Hi, i want to configure Klipper for IDEX mode wih 2 in 1 out Hotend
 
- My drivers are X1 = EZ5160
-                X2 = EZ5160
-                Y1 = EZ5160
-                Y2 = EZ5160
-                Z1 = EZ5160
+ My drivers are X1 = EZ5160,
+                X2 = EZ5160,
+                Y1 = EZ5160,
+                Y2 = EZ5160,
+                Z1 = EZ5160,
                 Z2 = EZ5160
 
- and exttruders drivers are E0 = EZ2209
-                            E1 = EZ2209
-                            E2 = EZ2209
+ and exttruders drivers are E0 = EZ2209,
+                            E1 = EZ2209,
+                            E2 = EZ2209,
                             E3 = EZ2209
 
  Bed size 550 (X) x 550 (Y) x 500 (Z)
 
  My endstops are X-Minimum = NPN Probe with Normally Open (NO)
+ 
                  X-Maximum = NPN Probe with Normally Open (NO)
+				 
                  Y-Minimum = NPN Probe with Normally Closed (NC)
+				 
                  Z-Minimum = CR Ttouch
 
 I am using all axis as Lead Screws, no Blet drive
