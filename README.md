@@ -30,7 +30,7 @@
 				 
                  Y-Minimum = NPN Probe with Normally Closed (NC)
 				 
-                 Z-Minimum = CR Ttouch
+                 Z-Minimum = CR Touch
 
 I am using all axis as Lead Screws, no belt drive
 One Rotaion travel distance = 12 mm (all axis), steps per unitt in Marlin = 533.33 (for 32 microsteps)
