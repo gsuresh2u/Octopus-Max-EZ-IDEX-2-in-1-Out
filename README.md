@@ -6,6 +6,8 @@
  Board Respository : https://github.com/bigtreetech/Octopus-Max-EZ
  
  Board url : https://biqu.equipment/collections/control-board/products/bigtreetech-btt-octopusmax-ez-for-3d-printer
+ 
+![Max-Ez](https://user-images.githubusercontent.com/39871361/218757494-22f30411-a97d-464c-96b5-996ba3d826f0.jpg)
 
  Reference for 4 extruders in IDEX : https://github.com/DrumClock/my_config
 
