@@ -1,0 +1,25 @@
+Help : https://www.obico.io/blog/install-klipper-ender-3/
+
+Download the Raspberry Pi Imager : https://www.raspberrypi.com/software/
+
+Download Putty : https://www.putty.org/
+
+Download WINSCP : https://winscp.net/eng/index.php
+
+
+
+change Directory : cd ~/klipper/
+Open Config : make menuconfig
+After seletion to make klipper.bin : make 
+
+Connect with WINSCP, tehn fnd klipper.bin in klipper\out folder
+
+
+sudo cp ./scripts/klipper-mcu.service /etc/systemd/system/
+sudo systemctl enable klipper-mcu.service
+
+After connecting Mothaboard, find id : ls /dev/serial/by-id/*
+sudo service Klipper stop
+make flash FLASH_DEVICE=/dev/serial/by-id/usb-Klipper_stm32h723xx_340038001551303531313638-if00
+sudo service klipper start
+sudo usermod -a -G tty pi  #If klippy.log reports a "Permission denied" 
