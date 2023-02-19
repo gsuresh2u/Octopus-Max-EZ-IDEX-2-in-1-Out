@@ -1,5 +1,7 @@
 Help : https://www.obico.io/blog/install-klipper-ender-3/
 
+https://www.klipper3d.org/RPi_microcontroller.html#install-the-rc-script
+
 Download the Raspberry Pi Imager : https://www.raspberrypi.com/software/
 
 Download Putty : https://www.putty.org/
@@ -9,6 +11,7 @@ Download WINSCP : https://winscp.net/eng/index.php
 
 
 change Directory : cd ~/klipper/
+make clean
 Open Config : make menuconfig
 After seletion to make klipper.bin : make 
 
