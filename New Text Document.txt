@@ -7,14 +7,14 @@
 
 #https://klipperscreen.readthedocs.io		 ; Klipper Screen
 
-[include mainsail.cfg]
+
 [mcu]
 serial: /dev/serial/by-id/usb-Klipper_stm32h723xx_340038001551303531313638-if00
 # baud: 250000      
 # restart_method: command
 
-#[duplicate_pin_override]
-#pins: PF6, PB0, PF9, PC4
+[duplicate_pin_override]
+pins: PF6, PB0, PF9, PC4
     # shared heater and sensor HE0 + HE1
     # shared heater and sensor HE2 + HE3
 
@@ -30,7 +30,7 @@ max_temp: 100
 kinematics: cartesian
 max_velocity: 100
 max_accel: 500
-max_z_velocity: 10
+max_z_velocity: 25
 max_z_accel: 30
 
 
@@ -43,13 +43,13 @@ max_z_accel: 30
 step_pin: PC13
 dir_pin: PC14
 enable_pin: !PE6		
-microsteps: 16
-rotation_distance: 40
+microsteps: 64
+rotation_distance: 12
 endstop_pin: !PF0		#Probe is Normally Open ( NO )
 position_min: -90
 position_endstop: 0     #-90
 position_max: 550
-homing_speed: 80
+homing_speed: 50
 
 
 # Motor-2 ~~~~~~~~~~~ X-Axis Motor - 2 (X2 Carrige) dual-carriage  X ~~~~~~~~~
@@ -58,12 +58,12 @@ axis: x
 step_pin: PE4
 dir_pin: PE5
 enable_pin: !PE3		
-microsteps: 16
-rotation_distance: 40
+microsteps: 64
+rotation_distance: 12
 endstop_pin: !PF2		#Probe is Normally Open ( NO )
 position_endstop: 0
 position_max: 550
-homing_speed: 80
+homing_speed: 50
 
 
 # Motor-3  ~~~~~~~~~~~ Y-Axis Motor - 1 ~~~~~~~~~
@@ -71,37 +71,34 @@ homing_speed: 80
 step_pin: PE1
 dir_pin: PE0
 enable_pin: PE2		
-microsteps: 16
-rotation_distance: 40
-endstop_pin: !PF4	# Probe is Normally Closed ( NO )
-position_min: -5
-position_endstop: 0	
-position_max: 600
-homing_speed: 80
+microsteps: 64
+rotation_distance: 12
+endstop_pin: PF4	# Probe is Normally Closed ( NC )
+position_min: -25
+position_endstop: 0	#-25
+position_max: 550
 
 
 # Motor-4  ~~~~~~~~~~~ Y-Axis Motor - 2 ~~~~~~~~~
-[stepper_y1]
-step_pin: PB8
-dir_pin: PB9  
-enable_pin: !PB7
+#[stepper_y1]
+#step_pin: PB8
+#dir_pin: PB9
+#enable_pin: PB7
 #endstop_pin: PF3  # Probe is Normally Closed ( NC )
-microsteps: 16
-rotation_distance: 40
-
+#microsteps: 64
+#rotation_distance: 12
 
 
 # Motor-5 ~~~~~~~~~~~ Z-Axis Motor - 1 ~~~~~~~~~
 [stepper_z]
 step_pin: PB5
-dir_pin: PB4  
-enable_pin: PB6
-microsteps: 16
+dir_pin: PB4
+enable_pin: !PB6
+microsteps: 64
 rotation_distance: 12
 position_max: 500
 position_min: -1            # The Z carriage may need to travel below the Z=0
 endstop_pin: probe:z_virtual_endstop
-homing_speed: 5
 
 
 
@@ -109,10 +106,9 @@ homing_speed: 5
 [stepper_z1]
 step_pin: PG15
 dir_pin: PB3
-enable_pin: PD5
-microsteps: 16
+enable_pin: !PD5
+microsteps: 64
 rotation_distance: 12
-
 
 
 ######################################################################
@@ -127,7 +123,7 @@ rotation_distance: 12
 step_pin: PD3
 dir_pin: PD2
 enable_pin: !PD4
-microsteps: 16
+microsteps: 64
 rotation_distance: 33.500
 nozzle_diameter: 0.800
 filament_diameter: 1.750
@@ -135,163 +131,91 @@ heater_pin: PF6    # HE0
 sensor_pin:  PB0   # TH0 
 sensor_type:  EPCOS 100K B57560G104F	# Marlin Type 1
 control: pid
-pid_Kp: 16.485
-pid_Ki: 0.839
-pid_Kd: 80.981
+pid_Kp: 11.92
+pid_Ki: 0.95
+pid_Kd: 37.17
 min_temp: 0
 max_temp: 300
 
 
-
-
-# Motor-8 ~~~~~~~~~~~ Extruder - 2 ~~~~~~~~~
-[extruder1]
+[extruder_stepper extruder1] ##	In E2-MOT Position
+extruder:  # If blank, not synchronized
 step_pin: PA10
 dir_pin: PA9
 enable_pin: !PA15
-microsteps: 16
 rotation_distance: 33.500
+microsteps: 16
 nozzle_diameter: 0.800
 filament_diameter: 1.750
-heater_pin: PA0 #PF6  # shared HE
-sensor_pin: PC5 #PB0  # shared TH
-sensor_type: EPCOS 100K B57560G104F	#Marlin Type 1
 control: pid
-pid_Kp: 19.373
-pid_Ki: 0.978
-pid_Kd: 95.899
-min_temp: -80
+pid_Kp: 11.92
+pid_Ki: 0.95
+pid_Kd: 37.17
+min_temp: 0
 max_temp: 280
+
+# Motor-8 ~~~~~~~~~~~ Extruder - 2 ~~~~~~~~~
+#[extruder1]
+#step_pin: PA10
+#dir_pin: PA9
+#enable_pin: !PA15
+#microsteps: 64
+#rotation_distance: 33.500
+#nozzle_diameter: 0.800
+#filament_diameter: 1.750
+#heater_pin: PF6  # shared HE
+#sensor_pin: PB0  # shared TH
+#sensor_type: EPCOS 100K B57560G104F	#Marlin Type 1
+#control: pid
+#pid_Kp: 11.92
+#pid_Ki: 0.95
+#pid_Kd: 37.17
+#min_temp: 0
+#max_temp: 280
 
 
 # ---- carriage X2 ----
 
 
  # Motor-9 ~~~~~~~~~~~ Extruder - 3 ~~~~~~~~~
-#[extruder2]
-#step_pin: PA8
-#dir_pin: PC7
-#enable_pin: !PC9
-#microsteps: 16
-#rotation_distance: 33.500
-#nozzle_diameter: 0.800
-#filament_diameter: 1.750
-#heater_pin: PF9     # HE 2
-#sensor_pin: PC4    # TH 2
+[extruder_stepper extruder2]   #[extruder2]
+extruder:  # If blank, not synchronized
+step_pin: PA8
+dir_pin: PC7
+enable_pin: !PC9
+microsteps: 16
+rotation_distance: 33.500
+nozzle_diameter: 0.800
+filament_diameter: 1.750
+heater_pin: PF9     # HE 2
+sensor_pin: PC4    # TH 2
 #sensor_type: EPCOS 100K B57560G104F	#Marlin Type 1
-#control: pid
-#pid_Kp: 11.92
-#pid_Ki: 0.95
-#pid_Kd: 37.17
-#min_temp: -80
-#max_temp: 280
+control: pid
+pid_Kp: 11.92
+pid_Ki: 0.95
+pid_Kd: 37.17
+min_temp: 0
+max_temp: 280
 
 # Motor-10 ~~~~~~~~~~~ Extruder - 4 ~~~~~~~~~
-#[extruder3]
-#step_pin: PG6
-#dir_pin: PC6
-#enable_pin: !PC8
-#microsteps: 16
-#rotation_distance: 33.500
-#nozzle_diameter: 0.800
-#filament_diameter: 1.750
-#heater_pin: PF9     # HE 2
-#sensor_pin: PC4    # TH 2
+[extruder_stepper extruder3]  #[extruder3]
+extruder:  # If blank, not synchronized
+step_pin: PG6
+dir_pin: PC6
+enable_pin: !PC8
+microsteps: 16
+rotation_distance: 33.500
+nozzle_diameter: 0.800
+filament_diameter: 1.750
+heater_pin: PF9    # shared HE
+sensor_pin: PC4    # shared TH
 #sensor_type: EPCOS 100K B57560G104F	#Marlin Type 1
-#control: pid
-#pid_Kp: 11.92
-#pid_Ki: 0.95
-#pid_Kd: 37.17
-#min_temp: -80
-#max_temp: 280
-
-######################################################################
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Drivers ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-######################################################################
-[tmc5160 stepper_x]
-cs_pin: PG14
-spi_speed: 500000
-spi_software_sclk_pin: PE12
-spi_software_mosi_pin: PE14
-spi_software_miso_pin: PE13
-sense_resistor: 0.075
-interpolate: True
-run_current: 1.272
-hold_current: 0.600
-stealthchop_threshold: 999999
-
-[tmc5160 dual_carriage]
-cs_pin: PG13
-spi_speed: 500000
-spi_software_sclk_pin: PE12
-spi_software_mosi_pin: PE14
-spi_software_miso_pin: PE13
-sense_resistor: 0.075
-interpolate: True
-run_current: 1.272
-hold_current: 0.600
-stealthchop_threshold: 999999
-
-[tmc5160 stepper_y]
-cs_pin: PG12
-spi_speed: 500000
-spi_software_sclk_pin: PE12
-spi_software_mosi_pin: PE14
-spi_software_miso_pin: PE13
-sense_resistor: 0.075
-interpolate: True
-run_current: 1.782
-hold_current: 0.600
-stealthchop_threshold: 999999
-
-
-[tmc5160 stepper_y1]
-cs_pin: PG11
-spi_speed: 500000
-spi_software_sclk_pin: PE12
-spi_software_mosi_pin: PE14
-spi_software_miso_pin: PE13
-sense_resistor: 0.075
-interpolate: True
-run_current: 1.782
-hold_current: 0.600
-stealthchop_threshold: 999999
-
-[tmc5160 stepper_z]
-cs_pin: PG10
-spi_speed: 500000
-spi_software_sclk_pin: PE12
-spi_software_mosi_pin: PE14
-spi_software_miso_pin: PE13
-sense_resistor: 0.075
-interpolate: True
-run_current: 1.782
-hold_current: 0.600
-stealthchop_threshold: 999999
-
-
-[tmc5160 stepper_z1]
-cs_pin: PG9
-spi_speed: 500000
-spi_software_sclk_pin: PE12
-spi_software_mosi_pin: PE14
-spi_software_miso_pin: PE13
-sense_resistor: 0.075
-interpolate: True
-run_current: 1.782
-hold_current: 0.600
-stealthchop_threshold: 999999
-
-
-[tmc2209 extruder]
-uart_pin: PD7
-run_current: 0.800
-stealthchop_threshold: 999999
-
-[tmc2209 extruder1]
-uart_pin: PD6
-run_current: 0.800
-stealthchop_threshold: 999999
+control: pid
+pid_Kp: 11.92
+pid_Ki: 0.95
+pid_Kd: 37.17
+min_temp: 0
+max_temp: 280
 
 
 ######################################################################
@@ -300,13 +224,13 @@ stealthchop_threshold: 999999
 
 [heater_fan hotend_01]  	#Hotend Fan on X1 Carrige
 pin: PA6     # FAN0
-heater: extruder  #, extruder1
+heater: extruder, extruder1
 heater_temp: 50.0
 fan_speed: 1.0
 
 [heater_fan hotend_23]	         #Hotend Fan on X2 Carrige
 pin: PA5   # FAN1
-heater:  extruder1  #, extruder3
+heater:  extruder2, extruder3
 heater_temp: 50.0
 fan_speed: 1.0
 
@@ -344,7 +268,7 @@ max_temp: 130
 speed: 600
 horizontal_move_z: 5
 mesh_min: 30,30
-mesh_max: 500,500
+mesh_max: 500, 500
 probe_count: 6,6
 fade_start: 1.0
 fade_end: 10.0
@@ -352,8 +276,8 @@ fade_end: 10.0
 
 [safe_z_home]
 home_xy_position:275,275	 # Center of Bed
-speed: 5
-z_hop: 10	 # Move up 10 mm
+speed:100
+z_hop:10	 # Move up 10 mm
 
 
 [screws_tilt_adjust]
@@ -368,8 +292,8 @@ screw4_name: rear left screw
 screw_thread: CW-M4
   
 [bltouch]
-sensor_pin: PB14
-control_pin: PB15
+sensor_pin: PB15      # probe pin 
+control_pin: PB14   # servo pin 
 z_offset: 2
  
 
@@ -396,18 +320,14 @@ aliases:
 ######################################################################
 # "RepRapDiscount 128x64 Full Graphic Smart Controller" type displays
 ######################################################################
-
 [display]
 lcd_type: st7920
-cs_pin: PD13
-sclk_pin: PD12
-sid_pin: PD14
-encoder_pins: ^PG5, ^PG4
-click_pin: ^!PD15
-#kill_pin: ^!<RST>
+cs_pin: EXP1_7
+sclk_pin: EXP1_6
+sid_pin: EXP1_8
+encoder_pins: ^EXP1_5, ^EXP1_3
+click_pin: ^!EXP1_2
 
-[output_pin beeper]
-pin: EXP1_1
 
 
 #############################################
@@ -421,21 +341,21 @@ runout_gcode:
        TRIGGER_RUNOUT SENSOR=extruder
 
 
-[filament_switch_sensor my_extruder]
+[filament_switch_sensor extruder1]
 switch_pin:  PC15     # M6-DET
 pause_on_runout: True
 runout_gcode:    
        TRIGGER_RUNOUT SENSOR=extruder1
 
 
-[filament_switch_sensor extruder1]
+[filament_switch_sensor extruder2]
 switch_pin:  PE10      # RGB1
 pause_on_runout: True
 runout_gcode:    
       TRIGGER_RUNOUT SENSOR=extruder2
 
 
-[filament_switch_sensor my_extruder1]
+[filament_switch_sensor extruder3]
 switch_pin:  PE9      #  RGB2
 pause_on_runout: True
 runout_gcode:    
@@ -474,7 +394,7 @@ runout_gcode:
 # Pause/Resume functionality with support of position capture and restore.   
 
 [virtual_sdcard]
-path: /home/pi/printer_data/gcodes
+path: ~/gcode_files
 
 [save_variables]
 filename: ~/save_variables.cfg

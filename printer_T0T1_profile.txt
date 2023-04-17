@@ -1,0 +1,80 @@
+; ******************** START **************************************
+
+BED_MESH_PROFILE LOAD="default" ; <-- best in DELAYED_GCODE_settings.cfg  -->  [delayed_gcode _INIT]
+
+G21 ; set units to millimeters
+G90 ; use absolute coordinates
+M82 ; use absolute distances for extrusion
+
+M190 S[bed_temperature] ; Wait the Bed is heated
+
+G28 ; home all axes
+G1 Z5 F3000 ; Nozzle on 5 mm possition
+G34 ; auto Z adjust
+
+M104 S180 T1 ; set temperature nozzle 
+M109 S180 T0 ; wait temperature nozzle 
+
+G1 Z0 F3000 ; Nozzle on 0 mm possition
+
+M104 S[temperature] T1 ; set temperature nozzle 
+M109 S[temperature] T0 ; wait temperature nozzle 
+M300 S330 P200 ;  ton 330Hz 0,2s
+
+M117 [input_filename_base]
+G1 Z2 F3000
+
+
+
+
+
+
+
+; ************************ END  **********************************
+
+G92 E1.5
+G1 F2700.000 E-1.50000
+
+; ----- axis Z +15 mm relative ----
+
+G91 ;use relative coordinates
+G1 Z15 ; Nozzle +15mm from last print possition
+G90 ;use absolute coordinates
+
+
+; ---- cleaning position X/Y
+
+G1 Y0 ;  home Y
+G1 X150 F3000 ; X on 150mm
+
+
+; ---- cleaning nozzle T0 -----
+T0
+G92 E0
+G1 E30 F270
+M400
+G4 P2000
+M109 T0 S150 ; wait for cooling nozzle
+
+
+; ---- cleaning nozzle T1 -----
+T1
+G92 E0
+G1 E30 F270
+M400
+G4 P2000
+M109 T1 S150 ; wait for cooling nozzle
+
+
+; --- start position ----
+G1 X300 F3000
+G1 Y300 
+
+G1 Z15 ; return to relative lift axis Z
+
+M104 S0 T0 ; turn off nozzle 
+M104 S0 T1 ; turn off nozzle 
+M140 S0    ; turn off heatbed
+
+M84 ; disable motors
+

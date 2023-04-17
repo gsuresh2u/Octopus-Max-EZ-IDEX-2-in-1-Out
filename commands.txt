@@ -10,19 +10,101 @@ Download WINSCP : https://winscp.net/eng/index.php
 
 
 
+cd ~
+
+git clone https://github.com/th33xitus/kiauh.git
+
+./kiauh/kiauh.sh
+sudo systemctl set-default multi-user.target
+sudo raspi-config
+1System Options
+└──S5 Boot / Auto Login
+   └──B1 Console
+   
+https://klipperscreen.readthedocs.io/en/latest/Installation/#moonraker-configuration
+sudo chmod g+r /dev/tty2
+sudo systemctl start KlipperScreen.service
+sudo chmod o+rw /dev/input/*
+   
 change Directory : cd ~/klipper/
 make clean
 Open Config : make menuconfig
 After seletion to make klipper.bin : make 
+scp pi@gsuresh2u:~/klipper/out/klipper.bin M:\firmware.bin
+
 
 Connect with WINSCP, tehn fnd klipper.bin in klipper\out folder
 
-
+cd ~/klipper/
 sudo cp ./scripts/klipper-mcu.service /etc/systemd/system/
 sudo systemctl enable klipper-mcu.service
 
-After connecting Mothaboard, find id : ls /dev/serial/by-id/*
+systemctl list-units --type=service
+git clone https://github.com/KevinOConnor/klipper
+
+http://192.168.0.167:7125/printer/info
+
+
+sudo  apt-get update --allow-releaseinfo-change 
+sudo apt full-upgrade -y
+
+cd ~/klipper/
+After connecting Mothaboard, find id : ls /dev/serial/by-id/*, ls /dev/usb/by-id
 sudo service Klipper stop
 make flash FLASH_DEVICE=/dev/serial/by-id/usb-Klipper_stm32h723xx_340038001551303531313638-if00
+
+
+ls -l /dev/disk/by-uuid
+
 sudo service klipper start
+sudo systemctl enable klipper-mcu
+sudo service klipper-mcu start
+sudo shutdown -r now
+sudo reboot -r now
+
 sudo usermod -a -G tty pi  #If klippy.log reports a "Permission denied" 
+
+
+lead screw = 12 mm per turn
+stepper = 200 steps per revolution
+
+12 / 200 = 0.06 mm / full step
+0.06 / 64 = 0.0009375 mm / microstep
+
+Z = 0.2mm
+0.2 / 0.06 = 3.33333333333 mm/ layer 0.2 mm
+0.2/0.06/64 = 0.5208333333 mm/ layer 0.2 mm
+
+that's not good
+
+PID_CALIBRATE HEATER=extruder TARGET=240	; PID Calibration
+PID_CALIBRATE HEATER=heater_bed TARGET=70
+SAVE_CONFIG	; Save Calibration
+Hotend 1 : pid_Kp=16.764 pid_Ki=0.860 pid_Kd=81.725
+Hotend 1 : pid_Kp=19.705 pid_Ki=1.011 pid_Kd=96.062
+Bed : pid_Kp=60.452 pid_Ki=1.460 pid_Kd=625.681
+
+https://www.klipper3d.org/Config_checks.html
+
+BLTOUCH-Commands
+BLTOUCH_DEBUG COMMAND=reset
+BLTOUCH_DEBUG COMMAND=pin_down
+BLTOUCH_DEBUG COMMAND=pin_up
+BLTOUCH_DEBUG COMMAND=touch_mode
+QUERY_PROBE
+
+Move without Homing
+add in config
+SET_KINEMATIC_POSITION X=0 Y=0 Z=0	; pass this commend to set positions, then move
+
+STEPPER_BUZZ STEPPER=
+
+Z_ENDSTOP_CALIBRATE
+SCREWS_TILT_CALCULATE
+
+M218       - view offset for all Hotends
+M218 T2 - view offset for Hotends T2
+M218 T2 X-65 Y0 Z0 - set offset for Hotend T1
+
+REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+DUMP_CONFIG S=dual_carriage
