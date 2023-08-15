@@ -108,3 +108,7 @@ M218 T2 X-65 Y0 Z0 - set offset for Hotend T1
 
 REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
 DUMP_CONFIG S=dual_carriage
+
+Camera Install 
+cd ~/crowsnest
+sudo make install
