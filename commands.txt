@@ -33,7 +33,7 @@ After seletion to make klipper.bin : make
 scp pi@gsuresh2u:~/klipper/out/klipper.bin M:\firmware.bin
 
 
-Connect with WINSCP, tehn fnd klipper.bin in klipper\out folder
+Connect with WINSCP, then fnd klipper.bin in klipper\out folder
 
 cd ~/klipper/
 sudo cp ./scripts/klipper-mcu.service /etc/systemd/system/
@@ -42,7 +42,7 @@ sudo systemctl enable klipper-mcu.service
 systemctl list-units --type=service
 git clone https://github.com/KevinOConnor/klipper
 
-http://192.168.0.167:7125/printer/info
+http://192.168.0.168:7125/printer/info
 
 
 sudo  apt-get update --allow-releaseinfo-change 
@@ -74,9 +74,9 @@ stepper = 200 steps per revolution
 Z = 0.2mm
 0.2 / 0.06 = 3.33333333333 mm/ layer 0.2 mm
 0.2/0.06/64 = 0.5208333333 mm/ layer 0.2 mm
-
 that's not good
 
+PID Calibration Method :-
 PID_CALIBRATE HEATER=extruder TARGET=240	; PID Calibration
 PID_CALIBRATE HEATER=heater_bed TARGET=70
 SAVE_CONFIG	; Save Calibration
@@ -86,7 +86,7 @@ Bed : pid_Kp=60.452 pid_Ki=1.460 pid_Kd=625.681
 
 https://www.klipper3d.org/Config_checks.html
 
-BLTOUCH-Commands
+BLTOUCH-Commands :-
 BLTOUCH_DEBUG COMMAND=reset
 BLTOUCH_DEBUG COMMAND=pin_down
 BLTOUCH_DEBUG COMMAND=pin_up
@@ -109,6 +109,6 @@ M218 T2 X-65 Y0 Z0 - set offset for Hotend T1
 REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
 DUMP_CONFIG S=dual_carriage
 
-Camera Install 
+Camera Install :-
 cd ~/crowsnest
 sudo make install
